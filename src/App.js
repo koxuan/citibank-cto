@@ -79,7 +79,7 @@ function App() {
             }}/>
      <br/>
      <br/>
-       <TextField id="outlined-basic" label="Bank Number" variant="outlined" 
+       <TextField id="outlined-basic" label="Account Number" variant="outlined" 
           onChange={(e) => {
               e.persist();
               setAccNo(e.target.value);
