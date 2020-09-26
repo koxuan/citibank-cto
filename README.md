@@ -15,7 +15,7 @@ cd citibank-cto
 npm install
 
 # Install flask
-pip install flask
+python3 -m pip install Flask
 
 # Start development server
 npm run dev
