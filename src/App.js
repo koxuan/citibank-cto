@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 function App() {
+   const [open, setOpen] = React.useState(false);
     const theme = createMuiTheme({
     palette: {
       primary: {
@@ -37,15 +38,35 @@ function App() {
       tonalOffset: 0.2,
     },
   });
+    useEffect(() => {
+  }, []);
+ const submit = () => {
+   const getRequestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: ' Bearer ce0016b874590747bb569c19b9560b21',
+          },
+        };
+        const url = 'https://api.ocbc.com:8243/Cheque_Status/1.0?ChequeNumber=749301&AccountNo=501001424001';
+        fetch(url, getRequestOptions)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+}
   return (
      <ThemeProvider theme={theme}>
-       <TextField id="outlined-basic" label="Cheque Number" variant="outlined" />
-       <br/>
-      
-       <br/>
-       <TextField id="outlined-basic" label="Bank Number" variant="outlined" />
     <div className="App">
-     <Button variant="contained" color="primary">
+     <br/>
+     <br/>
+       <TextField id="outlined-basic" label="Cheque Number" variant="outlined" />
+     <br/>
+     <br/>
+       <TextField id="outlined-basic" label="Bank Number" variant="outlined" />
+     <br/>
+     <br/>
+     <Button variant="contained" color="primary" onClick={submit}>
   Submit
 </Button>
  
