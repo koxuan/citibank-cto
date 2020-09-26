@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Button from '@material-ui/core/Button';
 import {
@@ -12,8 +11,19 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+}));
 function App() {
   const [chequeNo, setChequeNo] = React.useState('2');
   const [accNo, setAccNo] = React.useState('2');
@@ -66,9 +76,20 @@ function App() {
             setStatus(data.ChequeResponse.ChequeStatus);
           });
 }
+const classes = useStyles();
   return (
      <ThemeProvider theme={theme}>
     <div className="App">
+       <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit">
+            Cheque Check
+          </Typography>
+        </Toolbar>
+      </AppBar>
      <br/>
      <br/>
        <TextField id="outlined-basic" label="Cheque Number" variant="outlined" 
