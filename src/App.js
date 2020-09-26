@@ -8,9 +8,16 @@ import {
   ThemeProvider,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 
 function App() {
+  const [chequeNo, setChequeNo] = React.useState('2');
+  const [accNo, setAccNo] = React.useState('2');
+  const [status, setStatus] = React.useState('');
    const [open, setOpen] = React.useState(false);
     const theme = createMuiTheme({
     palette: {
@@ -48,11 +55,15 @@ function App() {
             Authorization: ' Bearer ce0016b874590747bb569c19b9560b21',
           },
         };
-        const url = 'https://api.ocbc.com:8243/Cheque_Status/1.0?ChequeNumber=749301&AccountNo=501001424001';
-        fetch(url, getRequestOptions)
+        const url = 'https://api.ocbc.com:8243/Cheque_Status/1.0?ChequeNumber=';
+        const url2 = url + chequeNo;
+        const url3 = url2 + '&AccountNo=' + accNo;
+        fetch(url3, getRequestOptions)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            setOpen(true)
+            console.log(data.ChequeResponse.ChequeStatus);
+            setStatus(data.ChequeResponse.ChequeStatus);
           });
 }
   return (
@@ -60,17 +71,50 @@ function App() {
     <div className="App">
      <br/>
      <br/>
-       <TextField id="outlined-basic" label="Cheque Number" variant="outlined" />
+       <TextField id="outlined-basic" label="Cheque Number" variant="outlined" 
+         onChange={(e) => {
+              e.persist();
+              setChequeNo(e.target.value);
+            
+            }}/>
      <br/>
      <br/>
-       <TextField id="outlined-basic" label="Bank Number" variant="outlined" />
+       <TextField id="outlined-basic" label="Bank Number" variant="outlined" 
+          onChange={(e) => {
+              e.persist();
+              setAccNo(e.target.value);
+            
+            }}/>
      <br/>
      <br/>
      <Button variant="contained" color="primary" onClick={submit}>
+
   Submit
 </Button>
  
     </div>
+     <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title"></DialogTitle>
+        <DialogContent>
+     
+         
+
+       {status}
+  
+
+         
+        </DialogContent>
+        <DialogActions>
+          <Button  color="primary" onClick={() => setOpen(false)}>
+            Done
+          </Button>
+       
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }
